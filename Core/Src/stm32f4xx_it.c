@@ -57,8 +57,9 @@ void Dcm_Seca_Gen_Keys();
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
-
+extern CAN_HandleTypeDef hcan1;
+extern CAN_HandleTypeDef hcan2;
+extern UART_HandleTypeDef huart3;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -262,5 +263,7 @@ void CAN2_RX0_IRQHandler(void)
 
   /* USER CODE END CAN2_RX0_IRQn 1 */
 }
+
+/* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */
