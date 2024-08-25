@@ -205,26 +205,27 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 }
 
 /* USER CODE BEGIN 1 */
-void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
-	HAL_StatusTypeDef ret;
-	if (hcan == &hcan1) {
-		ret = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN1_pHeaderRx,
-				CAN1_DATA_RX);
-		if (ret != HAL_OK) {
-			Error_Handler();
-		}
-		CAN1Received = 1;
-		return;
-	}
-	if (hcan == &hcan2) {
-		ret = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN2_pHeaderRx,
-				CAN2_DATA_RX);
-		if (ret != HAL_OK) {
-			Error_Handler();
-		}
-		CAN2Received = 1;
-		return;
-	}
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
+{
+  HAL_StatusTypeDef ret;
+  if (hcan == &hcan1) {
+    ret = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN1_pHeaderRx,
+        CAN1_DATA_RX);
+    if (ret != HAL_OK) {
+      Error_Handler();
+    }
+    CAN1Received = 1;
+    return;
+  }
+  if (hcan == &hcan2) {
+    ret = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN2_pHeaderRx,
+        CAN2_DATA_RX);
+    if (ret != HAL_OK) {
+      Error_Handler();
+    }
+    CAN2Received = 1;
+    return;
+  }
 }
 
 void MX_CAN1_Setup()
@@ -296,6 +297,16 @@ void CAN1_Send()
   PrintCANLog(CAN1_pHeader.StdId, CAN1_DATA_TX);
   if (HAL_CAN_AddTxMessage(&hcan1, &CAN1_pHeader, CAN1_DATA_TX,
           &CAN1_pTxMailbox)
+      != HAL_OK) {
+    Error_Handler();
+  }
+}
+
+void CAN2_Send()
+{
+  PrintCANLog(CAN2_pHeader.StdId, CAN2_DATA_TX);
+  if (HAL_CAN_AddTxMessage(&hcan2, &CAN2_pHeader, CAN2_DATA_TX,
+          &CAN2_pTxMailbox)
       != HAL_OK) {
     Error_Handler();
   }
