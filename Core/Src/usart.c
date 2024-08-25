@@ -115,5 +115,19 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* uartHandle)
 }
 
 /* USER CODE BEGIN 1 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	REQ_BUFFER[NumBytesReq] = REQ_1BYTE_DATA;
+	NumBytesReq++;
+	//REQ_BUFFER[7] = NumBytesReq;
+}
 
+void USART3_SendString(uint8_t *ch)
+{
+   while(*ch!=0)
+   {
+      HAL_UART_Transmit(&huart3, ch, 1,HAL_MAX_DELAY);
+      ch++;
+   }
+}
 /* USER CODE END 1 */

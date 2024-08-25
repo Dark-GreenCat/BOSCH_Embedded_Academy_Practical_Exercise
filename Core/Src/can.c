@@ -214,6 +214,20 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 }
 
 /* USER CODE BEGIN 1 */
+void MX_CAN1_Setup()
+{
+	HAL_CAN_ConfigFilter(&hcan1, &CAN1_sFilterConfig);
+	HAL_CAN_Start(&hcan1);
+	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
+}
+
+void MX_CAN2_Setup()
+{
+	HAL_CAN_ConfigFilter(&hcan2, &CAN2_sFilterConfig);
+	HAL_CAN_Start(&hcan2);
+	HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING);
+}
+
 void CAN1CommSetup() {
 	CAN1_pHeader.IDE = CAN_ID_STD;
 	CAN1_pHeader.StdId = 0x078;

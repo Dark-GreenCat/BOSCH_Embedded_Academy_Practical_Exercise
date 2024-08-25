@@ -76,9 +76,6 @@ char bufsend[30]="XXX: D1 D2 D3 D4 D5 D6 D7 D8  ";
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-void MX_CAN1_Setup();
-void MX_CAN2_Setup();
-void USART3_SendString(uint8_t *ch);
 void PrintCANLog(uint16_t CANID, uint8_t * CAN_Frame);
 void SID_22_Practice();
 void SID_2E_Practice();
@@ -215,28 +212,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
-void MX_CAN1_Setup()
-{
-	HAL_CAN_ConfigFilter(&hcan1, &CAN1_sFilterConfig);
-	HAL_CAN_Start(&hcan1);
-	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
-}
-void MX_CAN2_Setup()
-{
-	HAL_CAN_ConfigFilter(&hcan2, &CAN2_sFilterConfig);
-	HAL_CAN_Start(&hcan2);
-	HAL_CAN_ActivateNotification(&hcan2, CAN_IT_RX_FIFO0_MSG_PENDING);
-}
-
-void USART3_SendString(uint8_t *ch)
-{
-   while(*ch!=0)
-   {
-      HAL_UART_Transmit(&huart3, ch, 1,HAL_MAX_DELAY);
-      ch++;
-   }
-}
 void PrintCANLog(uint16_t CANID, uint8_t *CAN_Frame) {
 	uint16_t loopIndx = 0;
 	char bufID[5] = "   ";
@@ -263,12 +238,7 @@ void PrintCANLog(uint16_t CANID, uint8_t *CAN_Frame) {
 	bufsend[29] = '\n';
 	USART3_SendString((unsigned char*) bufsend);
 }
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	REQ_BUFFER[NumBytesReq] = REQ_1BYTE_DATA;
-	NumBytesReq++;
-	//REQ_BUFFER[7] = NumBytesReq;
-}
+
 void delay(uint16_t delay)
 {
 	HAL_Delay(delay);
