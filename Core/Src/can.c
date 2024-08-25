@@ -214,5 +214,38 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 }
 
 /* USER CODE BEGIN 1 */
+void CAN1CommSetup() {
+	CAN1_pHeader.IDE = CAN_ID_STD;
+	CAN1_pHeader.StdId = 0x078;
+	CAN1_pHeader.RTR = CAN_RTR_DATA;
+	CAN1_pHeader.DLC = 8;
+	CAN1_sFilterConfig.FilterActivation = CAN_FILTER_ENABLE;
+	CAN1_sFilterConfig.FilterBank = 14;
+	CAN1_sFilterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+	CAN1_sFilterConfig.FilterIdHigh = 0x0A2 << 5;
+	CAN1_sFilterConfig.FilterIdLow = 0;
+	CAN1_sFilterConfig.FilterMaskIdHigh = 0x0A2 << 5;
+	CAN1_sFilterConfig.FilterMaskIdLow = 0;
+	CAN1_sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+	CAN1_sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+	CAN1_sFilterConfig.SlaveStartFilterBank = 16;
+	HAL_CAN_ConfigFilter(&hcan1, &CAN1_sFilterConfig);
+}
 
+void CAN2CommSetup() {
+	CAN2_pHeader.IDE = CAN_ID_STD;
+	CAN2_pHeader.StdId = 0x0A2;
+	CAN2_pHeader.RTR = CAN_RTR_DATA;
+	CAN2_pHeader.DLC = 8;
+	CAN2_sFilterConfig.FilterActivation = CAN_FILTER_ENABLE;
+	CAN2_sFilterConfig.FilterBank = 18;
+	CAN2_sFilterConfig.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+	CAN2_sFilterConfig.FilterIdHigh = CAN1_pHeader.StdId << 5;
+	CAN2_sFilterConfig.FilterIdLow = 0;
+	CAN2_sFilterConfig.FilterMaskIdHigh = CAN1_pHeader.StdId << 5;
+	CAN2_sFilterConfig.FilterMaskIdLow = 0;
+	CAN2_sFilterConfig.FilterMode = CAN_FILTERMODE_IDMASK;
+	CAN2_sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
+	HAL_CAN_ConfigFilter(&hcan2, &CAN2_sFilterConfig);
+}
 /* USER CODE END 1 */

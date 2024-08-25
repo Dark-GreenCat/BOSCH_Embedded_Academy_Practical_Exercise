@@ -125,6 +125,8 @@ int main(void)
   MX_CAN2_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
+  CAN1CommSetup();
+	CAN2CommSetup();
   MX_CAN1_Setup();
   MX_CAN2_Setup();
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_RXNE);
@@ -228,35 +230,31 @@ void USART3_SendString(uint8_t *ch)
       ch++;
    }
 }
-void PrintCANLog(uint16_t CANID, uint8_t * CAN_Frame)
-{
+void PrintCANLog(uint16_t CANID, uint8_t *CAN_Frame) {
 	uint16_t loopIndx = 0;
-	char bufID[3] = "   ";
-	char bufDat[2] = "  ";
-	char bufTime [8]="        ";
+	char bufID[5] = "   ";
+	char bufDat[3] = "  ";
+	char bufTime[8] = "        ";
 
-	sprintf(bufTime,"%d",TimeStamp);
-	USART3_SendString((uint8_t*)bufTime);
-	USART3_SendString((uint8_t*)" ");
+	sprintf(bufTime, "%d", TimeStamp);
+	USART3_SendString((uint8_t*) bufTime);
+	USART3_SendString((uint8_t*) " ");
 
-	sprintf(bufID,"%X",CANID);
-	for(loopIndx = 0; loopIndx < 3; loopIndx ++)
-	{
-		bufsend[loopIndx]  = bufID[loopIndx];
+	sprintf(bufID, "%03X", CANID);
+	for (loopIndx = 0; loopIndx < 3; loopIndx++) {
+		bufsend[loopIndx] = bufID[loopIndx];
 	}
 	bufsend[3] = ':';
 	bufsend[4] = ' ';
 
-
-	for(loopIndx = 0; loopIndx < 8; loopIndx ++ )
-	{
-		sprintf(bufDat,"%02X",CAN_Frame[loopIndx]);
-		bufsend[loopIndx*3 + 5] = bufDat[0];
-		bufsend[loopIndx*3 + 6] = bufDat[1];
-		bufsend[loopIndx*3 + 7] = ' ';
+	for (loopIndx = 0; loopIndx < 8; loopIndx++) {
+		sprintf(bufDat, "%02X", CAN_Frame[loopIndx]);
+		bufsend[loopIndx * 3 + 5] = bufDat[0];
+		bufsend[loopIndx * 3 + 6] = bufDat[1];
+		bufsend[loopIndx * 3 + 7] = ' ';
 	}
 	bufsend[29] = '\n';
-	USART3_SendString((unsigned char*)bufsend);
+	USART3_SendString((unsigned char*) bufsend);
 }
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
