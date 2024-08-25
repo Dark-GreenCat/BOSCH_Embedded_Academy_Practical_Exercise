@@ -46,6 +46,10 @@ void MX_CAN2_Init(void);
 /* USER CODE BEGIN Prototypes */
 void CAN1CommSetup();
 void CAN2CommSetup();
+
+void read_from_buffer(uint8_t *req_buffer, uint16_t len, uint8_t *data_tx);
+
+void CAN1_Send();
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -142,6 +142,13 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+		if (NumBytesReq != 0) {
+			delay(100);
+			read_from_buffer(REQ_BUFFER, NumBytesReq, CAN1_DATA_TX);
+			CAN1_Send();
+			delay(100);
+			NumBytesReq = 0;
+		}
 
     if(!BtnU) /*IG OFF->ON stimulation*/
     {

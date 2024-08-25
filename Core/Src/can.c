@@ -248,4 +248,25 @@ void CAN2CommSetup() {
 	CAN2_sFilterConfig.FilterScale = CAN_FILTERSCALE_32BIT;
 	HAL_CAN_ConfigFilter(&hcan2, &CAN2_sFilterConfig);
 }
+
+void read_from_buffer(uint8_t *req_buffer, uint16_t len, uint8_t *data_tx) {
+	data_tx[0] = len;
+	uint8_t i;
+	for (i = 0; i < len; i++) {
+		data_tx[i + 1] = req_buffer[i];
+	}
+	while (i <= 7) {
+		i++;
+		data_tx[i] = 0x55;
+	}
+}
+
+void CAN1_Send() {
+	PrintCANLog(CAN1_pHeader.StdId, CAN1_DATA_TX);
+	if (HAL_CAN_AddTxMessage(&hcan1, &CAN1_pHeader, CAN1_DATA_TX,
+			&CAN1_pTxMailbox) != HAL_OK) {
+		Error_Handler();
+	}
+
+}
 /* USER CODE END 1 */
