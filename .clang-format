@@ -1,0 +1,7 @@
+BasedOnStyle: Webkit
+SpaceAfterCStyleCast: true
+IndentWidth: 2
+ColumnLimit: 0
+MaxEmptyLinesToKeep: 20
+AllowShortFunctionsOnASingleLine: Empty
+
