@@ -21,7 +21,8 @@
 #include "can.h"
 
 /* USER CODE BEGIN 0 */
-
+volatile uint8_t CAN1Received = 0;
+volatile uint8_t CAN2Received = 0;
 /* USER CODE END 0 */
 
 CAN_HandleTypeDef hcan1;
@@ -204,6 +205,28 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 }
 
 /* USER CODE BEGIN 1 */
+void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan) {
+	HAL_StatusTypeDef ret;
+	if (hcan == &hcan1) {
+		ret = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN1_pHeaderRx,
+				CAN1_DATA_RX);
+		if (ret != HAL_OK) {
+			Error_Handler();
+		}
+		CAN1Received = 1;
+		return;
+	}
+	if (hcan == &hcan2) {
+		ret = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN2_pHeaderRx,
+				CAN2_DATA_RX);
+		if (ret != HAL_OK) {
+			Error_Handler();
+		}
+		CAN2Received = 1;
+		return;
+	}
+}
+
 void MX_CAN1_Setup()
 {
   HAL_CAN_ConfigFilter(&hcan1, &CAN1_sFilterConfig);
