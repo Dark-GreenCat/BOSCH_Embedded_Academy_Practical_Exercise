@@ -90,8 +90,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  // uint16_t i, j = 0;
-  // uint16_t Consecutive_Cntr = 0;
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -150,20 +149,23 @@ int main(void)
     }
 
     if (APP_GATEWAY_GetResponseFromECU(ecu_input_message, sizeof(ecu_input_message))) {
-      PrintCANLog(CAN1_pHeaderRx.StdId, ecu_input_message);
+      LOG(CAN1_pHeaderRx.StdId, ecu_input_message);
     }
 
-    if (!BtnU) /*IG OFF->ON stimulation*/
-    {
-      delay(20);
-      USART3_SendString((uint8_t*) "IG OFF ");
-      while (!BtnU)
-        ;
-      MX_CAN1_Setup();
-      MX_CAN2_Setup();
-      USART3_SendString((uint8_t*) "-> IG ON \n");
-      delay(20);
-    }
+		if (!BtnU) /*IG OFF->ON stimulation*/
+		{
+			delay(20);
+			APP_GATEWAY_SendLogToUser((uint8_t*) "IG OFF ");
+			while (!BtnU)
+				;
+			update_sid();
+			CAN2CommSetup();
+			MX_CAN1_Setup();
+			MX_CAN2_Setup();
+
+			APP_GATEWAY_SendLogToUser((uint8_t*) "-> IG ON \n");
+			delay(20);
+		}
   }
 
   memset(&REQ_BUFFER, 0x00, 4096);

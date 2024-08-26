@@ -13,6 +13,10 @@ void diagnostic_init(void)
   StdIDData = CAN1_pHeader.StdId;
 }
 
+void update_sid(void) {
+  	CAN1_pHeader.StdId = StdIDData;
+}
+
 void Generate_Seed(uint8_t* seed)
 {
   srand((unsigned int) TimeStamp);

@@ -16,6 +16,7 @@
 #define WRONG_KEY_RESPONSE_CODE 0x35
 
 void diagnostic_init(void);
+void update_sid(void);
 
 void Generate_Seed(uint8_t* seed);
 void calculate_key(uint8_t* input, uint8_t* output);

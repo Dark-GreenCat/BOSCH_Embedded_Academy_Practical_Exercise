@@ -1,6 +1,7 @@
 #include "api_gateway_app.h"
 #include "communication_service_app.h"
 #include "diagnostic_service_app.h"
+#include "user_interface_service_app.h"
 
 #include "main.h"
 #include "can.h"
@@ -34,5 +35,9 @@ bool APP_GATEWAY_SendRequestToECU(uint8_t* request_message, uint32_t size) {
 
 bool APP_GATEWAY_GetResponseFromECU(uint8_t* response_message, uint32_t size) {
     return APP_CMS_GetMessage(CMS_ECU, response_message, size);
+}
+
+void APP_GATEWAY_SendLogToUser(uint8_t* log) {
+    APP_UIS_SendLogToUser(log);
 }
 

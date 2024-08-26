@@ -55,7 +55,7 @@ extern "C" {
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
-
+#define LOG(CANID, CAN_Frame) PrintCANLog(CANID, CAN_Frame)
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
