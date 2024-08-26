@@ -25,6 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "api_gateway_app.h"
 #include "diagnostic.h"
 /* USER CODE END Includes */
 
@@ -130,39 +131,28 @@ int main(void)
   // Example Function to print can message via uart
   PrintCANLog(CAN1_pHeader.StdId, &CAN1_DATA_TX[0]);
   diagnostic_init();
+
+  uint8_t tester_input_message[8];
+  uint8_t diagnostic_result_message[8];
+  uint8_t user_input_message[8];
+  uint8_t ecu_input_message[8];
   while (1) {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    if (NumBytesReq != 0) {
-      delay(100);
-      read_from_buffer(REQ_BUFFER, NumBytesReq, CAN1_DATA_TX);
-      CAN1_Send();
-      delay(100);
-      NumBytesReq = 0;
+    if (APP_GATEWAY_GetRequestFromUser(user_input_message, sizeof(user_input_message))) {
+      APP_GATEWAY_SendRequestToECU(user_input_message, sizeof(user_input_message));
     }
-    if (CAN2Received) {
-      switch (REQ_BUFFER[0]) {
-      case 0x27:
-        SID_27_Practice(CAN2_DATA_TX, CAN2_DATA_RX);
-        break;
-      case 0x22:
-        SID_22_Practice(CAN2_DATA_TX, CAN2_DATA_RX);
-        break;
-      case 0x2E:
-        SID_2E_Practice(CAN2_DATA_TX, CAN2_DATA_RX);
-        break;
-      default:
-        USART3_SendString((uint8_t*) "Service not support\n");
-        break;
-      }
-      CAN2Received = 0;
+
+    if (APP_GATEWAY_GetRequestFromTester(tester_input_message, sizeof(tester_input_message))) {
+      APP_GATEWAY_HandleRequestOfTester(tester_input_message, diagnostic_result_message);
+      APP_GATEWAY_SendResponseToTester(diagnostic_result_message, sizeof(diagnostic_result_message));
     }
-    if (CAN1Received) {
-      //			USART3_SendString((uint8_t*) "Response: ");
-      PrintCANLog(CAN1_pHeaderRx.StdId, CAN1_DATA_RX);
-      CAN1Received = 0;
+
+    if (APP_GATEWAY_GetResponseFromECU(ecu_input_message, sizeof(ecu_input_message))) {
+      PrintCANLog(CAN1_pHeaderRx.StdId, ecu_input_message);
     }
+
     if (!BtnU) /*IG OFF->ON stimulation*/
     {
       delay(20);

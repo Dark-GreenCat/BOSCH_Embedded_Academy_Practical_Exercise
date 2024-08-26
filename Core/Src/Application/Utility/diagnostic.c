@@ -71,11 +71,6 @@ void SID_22_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
     tx_buffer[6] = 0x55;
     tx_buffer[7] = 0x55;
   }
-  if (HAL_CAN_AddTxMessage(&hcan2, &CAN2_pHeader, tx_buffer, &CAN2_pTxMailbox)
-      != HAL_OK) {
-    Error_Handler();
-  }
-  delay(100);
 }
 void SID_27_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
 {
@@ -132,11 +127,6 @@ void SID_27_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
     } else
       return;
   }
-  if (HAL_CAN_AddTxMessage(&hcan2, &CAN2_pHeader, tx_buffer, &CAN2_pTxMailbox)
-      != HAL_OK) {
-    Error_Handler();
-  }
-  delay(100);
 }
 void SID_2E_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
 {
@@ -158,9 +148,4 @@ void SID_2E_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
       tx_buffer[i] = 0x55;
     }
   }
-  if (HAL_CAN_AddTxMessage(&hcan2, &CAN2_pHeader, tx_buffer, &CAN2_pTxMailbox)
-      != HAL_OK) {
-    Error_Handler();
-  }
-  delay(100);
 }
