@@ -20,6 +20,7 @@
 #include "main.h"
 #include "can.h"
 #include "gpio.h"
+#include "tim.h"
 #include "usart.h"
 
 /* Private includes ----------------------------------------------------------*/
@@ -121,6 +122,8 @@ int main(void)
   MX_CAN1_Init();
   MX_CAN2_Init();
   MX_USART3_UART_Init();
+  MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   CAN1CommSetup();
   CAN2CommSetup();
@@ -145,7 +148,28 @@ int main(void)
       delay(100);
       NumBytesReq = 0;
     }
-
+    if (CAN2Received) {
+      switch (REQ_BUFFER[0]) {
+      case 0x27:
+        SID_27_Practice(CAN2_DATA_TX, CAN2_DATA_RX);
+        break;
+      case 0x22:
+        SID_22_Practice(CAN2_DATA_TX, CAN2_DATA_RX);
+        break;
+      case 0x2E:
+        SID_2E_Practice(CAN2_DATA_TX, CAN2_DATA_RX);
+        break;
+      default:
+        USART3_SendString((uint8_t*) "Service not support\n");
+        break;
+      }
+      CAN2Received = 0;
+    }
+    if (CAN1Received) {
+      //			USART3_SendString((uint8_t*) "Response: ");
+      PrintCANLog(CAN1_pHeaderRx.StdId, CAN1_DATA_RX);
+      CAN1Received = 0;
+    }
     if (!BtnU) /*IG OFF->ON stimulation*/
     {
       delay(20);

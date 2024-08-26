@@ -1,21 +1,21 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file    can.h
-  * @brief   This file contains all the function prototypes for
-  *          the can.c file
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    can.h
+ * @brief   This file contains all the function prototypes for
+ *          the can.c file
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2024 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __CAN_H__
@@ -29,7 +29,8 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
-
+extern volatile uint8_t CAN1Received;
+extern volatile uint8_t CAN2Received;
 /* USER CODE END Includes */
 
 extern CAN_HandleTypeDef hcan1;
@@ -50,7 +51,7 @@ void MX_CAN2_Setup();
 void CAN1CommSetup();
 void CAN2CommSetup();
 
-void read_from_buffer(uint8_t *req_buffer, uint16_t len, uint8_t *data_tx);
+void read_from_buffer(uint8_t* req_buffer, uint16_t len, uint8_t* data_tx);
 
 void CAN1_Send();
 void CAN2_Send();
@@ -61,4 +62,3 @@ void CAN2_Send();
 #endif
 
 #endif /* __CAN_H__ */
-
