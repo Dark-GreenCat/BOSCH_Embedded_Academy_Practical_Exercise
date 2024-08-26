@@ -57,7 +57,7 @@ void Negative_Response(uint8_t sid, uint8_t nrc, uint8_t* buffer)
 
 void SID_22_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
 {
-  delay(100);
+  APP_Delay(100);
   if (rx_buffer[0] != 3) // Invalid length
   {
     Negative_Response(READ_SID, INVALID_LENGTH_RESPONSE_CODE, tx_buffer);
@@ -78,7 +78,7 @@ void SID_22_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
 }
 void SID_27_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
 {
-  delay(100);
+  APP_Delay(100);
   if (Reject_Key_Process)
     return;
   switch (rx_buffer[2]) {
@@ -134,7 +134,7 @@ void SID_27_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
 }
 void SID_2E_Practice(uint8_t* tx_buffer, uint8_t* rx_buffer)
 {
-  delay(100);
+  APP_Delay(100);
   if (!SecurityUnlocked) {
     Negative_Response(WRITE_SID, ACCESS_DENIED_CODE, tx_buffer);
   } else if (rx_buffer[0] < 5) {

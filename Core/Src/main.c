@@ -74,7 +74,7 @@ char bufsend[30] = "XXX: D1 D2 D3 D4 D5 D6 D7 D8  ";
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 void PrintCANLog(uint16_t CANID, uint8_t* CAN_Frame);
-void delay(uint16_t delay);
+void APP_Delay(uint16_t delay);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -117,10 +117,7 @@ int main(void)
   MX_TIM2_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-  CAN1CommSetup();
-  CAN2CommSetup();
-  MX_CAN1_Setup();
-  MX_CAN2_Setup();
+  CAN_Setup();
   __HAL_UART_ENABLE_IT(&huart3, UART_IT_RXNE);
 
   /* USER CODE END 2 */
@@ -128,7 +125,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   // Example Function to print can message via uart
-  PrintCANLog(CAN1_pHeader.StdId, &CAN1_DATA_TX[0]);
+  LOG(CAN1_pHeader.StdId, &CAN1_DATA_TX[0]);
   diagnostic_init();
 
   uint8_t tester_input_message[8];
@@ -152,20 +149,18 @@ int main(void)
       LOG(CAN1_pHeaderRx.StdId, ecu_input_message);
     }
 
-		if (!BtnU) /*IG OFF->ON stimulation*/
-		{
-			delay(20);
-			APP_GATEWAY_SendLogToUser((uint8_t*) "IG OFF ");
-			while (!BtnU)
-				;
-			update_sid();
-			CAN2CommSetup();
-			MX_CAN1_Setup();
-			MX_CAN2_Setup();
+    if (!BtnU) /*IG OFF->ON stimulation*/
+    {
+      APP_Delay(20);
+      APP_GATEWAY_SendLogToUser((uint8_t*) "IG OFF ");
+      while (!BtnU)
+        ;
+      update_sid();
+      CAN_Setup();
 
-			APP_GATEWAY_SendLogToUser((uint8_t*) "-> IG ON \n");
-			delay(20);
-		}
+      APP_GATEWAY_SendLogToUser((uint8_t*) "-> IG ON \n");
+      APP_Delay(20);
+    }
   }
 
   memset(&REQ_BUFFER, 0x00, 4096);
@@ -247,7 +242,7 @@ void PrintCANLog(uint16_t CANID, uint8_t* CAN_Frame)
   USART3_SendString((unsigned char*) bufsend);
 }
 
-void delay(uint16_t delay)
+void APP_Delay(uint16_t delay)
 {
   HAL_Delay(delay);
 }

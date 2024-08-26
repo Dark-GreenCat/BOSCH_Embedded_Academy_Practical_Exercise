@@ -1,8 +1,8 @@
 #ifndef DIAGNOSTIC_SERVICE_APP_H
 #define DIAGNOSTIC_SERVICE_APP_H
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 bool APP_DNS_HandleDiagnosticRequest(uint8_t* request_message, uint8_t* response_message);
 bool APP_DNS_ConstructDiagnosticRequest(uint8_t* request_message, uint32_t request_size, uint8_t* diagnostic_request, uint32_t diagnostic_size);

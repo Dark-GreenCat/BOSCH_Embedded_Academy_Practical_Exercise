@@ -316,4 +316,11 @@ void CAN2_Send()
     Error_Handler();
   }
 }
+void CAN_Setup()
+{
+  CAN1CommSetup();
+  CAN2CommSetup();
+  MX_CAN1_Setup();
+  MX_CAN2_Setup();
+}
 /* USER CODE END 1 */

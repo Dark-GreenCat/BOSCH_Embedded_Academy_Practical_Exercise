@@ -91,7 +91,7 @@ extern uint8_t Flg_Consecutive;
 
 extern unsigned int TimeStamp;
 
-extern void delay(uint16_t delay);
+extern void APP_Delay(uint16_t delay);
 extern void USART3_SendString(uint8_t* ch);
 void PrintCANLog(uint16_t CANID, uint8_t* CAN_Frame);
 /* USER CODE END Private defines */

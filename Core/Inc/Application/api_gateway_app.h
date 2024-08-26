@@ -1,8 +1,8 @@
 #ifndef API_GATEWAY_APP_H
 #define API_GATEWAY_APP_H
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 bool APP_GATEWAY_GetRequestFromTester(uint8_t* request_message, uint32_t size);
 bool APP_GATEWAY_HandleRequestOfTester(uint8_t* request_message, uint8_t* response_message);

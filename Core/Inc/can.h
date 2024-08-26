@@ -60,6 +60,8 @@ void read_from_buffer(uint8_t* req_buffer, uint16_t len, uint8_t* data_tx);
 
 void CAN1_Send();
 void CAN2_Send();
+
+void CAN_Setup();
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus
