@@ -73,9 +73,6 @@ char bufsend[30] = "XXX: D1 D2 D3 D4 D5 D6 D7 D8  ";
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 void PrintCANLog(uint16_t CANID, uint8_t* CAN_Frame);
-void SID_22_Practice();
-void SID_2E_Practice();
-void SID_27_Practice();
 void delay(uint16_t delay);
 /* USER CODE END PFP */
 
