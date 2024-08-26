@@ -61,11 +61,6 @@ uint16_t NumBytesReq = 0;
 uint8_t REQ_BUFFER[4096];
 uint8_t REQ_1BYTE_DATA;
 
-uint8_t CAN1_DATA_TX[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-uint8_t CAN1_DATA_RX[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-uint8_t CAN2_DATA_TX[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-uint8_t CAN2_DATA_RX[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
 uint16_t Num_Consecutive_Tester;
 uint8_t Flg_Consecutive = 0;
 
@@ -97,8 +92,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-  uint16_t i, j = 0;
-  uint16_t Consecutive_Cntr = 0;
+  // uint16_t i, j = 0;
+  // uint16_t Consecutive_Cntr = 0;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -137,6 +132,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   // Example Function to print can message via uart
   PrintCANLog(CAN1_pHeader.StdId, &CAN1_DATA_TX[0]);
+  diagnostic_init();
   while (1) {
     /* USER CODE END WHILE */
 

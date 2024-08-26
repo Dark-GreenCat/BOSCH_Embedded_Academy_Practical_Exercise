@@ -29,6 +29,11 @@ extern "C" {
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
+extern uint8_t CAN1_DATA_TX[8];
+extern uint8_t CAN1_DATA_RX[8];
+extern uint8_t CAN2_DATA_TX[8];
+extern uint8_t CAN2_DATA_RX[8];
+
 extern volatile uint8_t CAN1Received;
 extern volatile uint8_t CAN2Received;
 /* USER CODE END Includes */

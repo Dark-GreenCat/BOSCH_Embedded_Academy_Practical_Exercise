@@ -8,6 +8,11 @@ volatile uint8_t Reject_Key_Process = 0;
 uint8_t SeedProvided = 0;
 uint32_t StdIDData;
 
+void diagnostic_init(void)
+{
+  StdIDData = CAN1_pHeader.StdId;
+}
+
 void Generate_Seed(uint8_t* seed)
 {
   srand((unsigned int) TimeStamp);
